@@ -7,5 +7,4 @@
   :components ((:file "package.seed"))
   :depends-on (#:alexandria
                #:trivial-package-local-nicknames
-               #:capitalized-export
-               #:util.package.seed))
+               #:capitalized-export))

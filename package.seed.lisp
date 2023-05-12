@@ -12,7 +12,7 @@
      ;; Let's not confuse slime.
      #| blah |# (in-package ,name)
      ,@(when clear-exports
-         `((util.package.seed:unexport-all (find-package ',name))))
+         `((unexport-all (find-package ',name))))
      ,@(when capitalized-export
          `((setf *readtable* (capitalized-export:make-capitalized-export-readtable
                               :package (find-package ',name)))))
@@ -22,3 +22,9 @@
                    :do (trivial-package-local-nicknames:add-package-local-nickname
                         ,local-nick ,package-name (find-package ',name))))))
      t))
+
+(defun unexport-all (&optional (package *package*))
+  (let (exported-symbols)
+    (do-external-symbols (sym package)
+      (push sym exported-symbols))
+    (unexport exported-symbols package)))
