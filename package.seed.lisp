@@ -3,7 +3,7 @@
   (in-package :package.seed)
   (setf *readtable* (capitalized-export:make-capitalized-export-readtable)))
 
-(defmacro Define-seed-package (name &body rest &key capitalized-export
+(defmacro Define-seed-package (name &body rest &key export-capitalized
                                                     nicknames
                                                     clear-exports)
   (declare (ignore rest))
@@ -13,7 +13,7 @@
      #| blah |# (in-package ,name)
      ,@(when clear-exports
          `((unexport-all (find-package ',name))))
-     ,@(when capitalized-export
+     ,@(when export-capitalized
          `((setf *readtable* (capitalized-export:make-capitalized-export-readtable
                               :package (find-package ',name)))))
      ,@(when nicknames
